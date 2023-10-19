@@ -86,4 +86,35 @@ const findInvalidCards = (arrayOfCreditCards) => {
 	return invalidCreditCardsArray;
 };
 
-console.log(findInvalidCards(batch));
+// Create a function, idInvalidCardCompanies() that has one parameter for
+// a nested array of invalid numbers and returns an array of companies.
+const idInvalidCardCompanies = (invalidCreditCardsArray) => {
+	let arrayWithIdNumbers = [];
+
+	for (const creditCard of invalidCreditCardsArray) {
+		arrayWithIdNumbers.push(creditCard[0]);
+	}
+	// console.log(arrayWithIdNumbers);
+	const arrayWithBrands = arrayWithIdNumbers.map((number) => {
+		if (number === 3) {
+			return (number = "Amex (American Express)");
+		} else if (number === 4) {
+			return (number = "Visa");
+		} else if (number === 5) {
+			return (number = "Mastercard");
+		} else if (number === 6) {
+			return (number = "Discover");
+		} else {
+			return (number = "Company not found");
+		}
+	});
+	// console.log(arrayWithBrands);
+
+	const companiesArrayWithoutDuplicates = arrayWithBrands.filter(
+		(item, index) => arrayWithBrands.indexOf(item) === index
+	);
+
+	return companiesArrayWithoutDuplicates;
+};
+
+console.log(idInvalidCardCompanies(findInvalidCards(batch)));
