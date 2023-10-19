@@ -39,4 +39,51 @@ const batch = [
 ];
 
 // Add your functions below:
-const validateCred = () => {};
+const validateCred = (creditCardNumbersArray) => {
+	let doubledNumbers = [];
+	let checkedNumbers = [];
+	let total;
+
+	// Looping through all doubled numbers
+	for (let i = creditCardNumbersArray.length - 1; i >= 0; i -= 2) {
+		checkedNumbers.push(creditCardNumbersArray[i]);
+	}
+	// Looping through all doubled numbers
+	for (let i = creditCardNumbersArray.length - 2; i >= 0; i -= 2) {
+		if (creditCardNumbersArray[i] * 2 > 9) {
+			doubledNumbers.push(creditCardNumbersArray[i] * 2 - 9);
+		} else {
+			doubledNumbers.push(creditCardNumbersArray[i] * 2);
+		}
+	}
+	// console.log(checkedNumbers);
+	// console.log(doubledNumbers);
+
+	// Concatenate the two arrays
+	total = doubledNumbers.concat(checkedNumbers).reduce((acc, cv) => acc + cv);
+
+	// Check if the sum divided by 10 has a remainder of 0 = true
+	if (total % 10 === 0) {
+		return true;
+	}
+	return false;
+};
+
+// console.log(validateCred(invalid1));
+
+//  Create another function, findInvalidCards() that has one parameter for a nested
+//  array of credit card numbers. The role of findInvalidCards() is to check through
+//  the nested array for which numbers are invalid, and return another nested array of invalid cards.
+const findInvalidCards = (arrayOfCreditCards) => {
+	let invalidCreditCardsArray = [];
+	arrayOfCreditCards.forEach((creditCardArray) => {
+		const isValid = validateCred(creditCardArray);
+		// console.log(isValid);
+		if (!isValid) {
+			invalidCreditCardsArray.push(creditCardArray);
+		}
+	});
+	return invalidCreditCardsArray;
+};
+
+console.log(findInvalidCards(batch));
